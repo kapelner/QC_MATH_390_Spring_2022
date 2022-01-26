@@ -1,6 +1,6 @@
-# MATH 341 Bayesian Modeling Spring 2021
+# MATH 390 Bayesian Modeling Spring 2022
 
-This is the course homepage for Math 341 (and Masters level 650.3-02) at Queens College, City University of New York taught by Professor Adam Kapelner. The course syllabus can be found [here](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/syllabus/syllabus.pdf). We are now using [slack](https://slack.com/) for class discussions and videos (see syllabus for link).
+This is the course homepage for Math 390 (and Masters level 690.3) at Queens College, City University of New York taught by Professor Adam Kapelner. The course syllabus can be found [here](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/syllabus/syllabus.pdf). We are now using [slack](https://slack.com/) for class discussions and videos (see syllabus for link).
 
 ## Lectures
 
