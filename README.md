@@ -6,6 +6,10 @@ This is the course homepage for Math 390 (and Masters level 690.3) at Queens Col
 
 My lectures can be listened to as videos and lecture notes from a previous year are uploaded as well.
 
+* Lecture 8 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec08kap.pdf)
+* Lecture 7 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec07kap.pdf)
+* Lecture 6 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec06kap.pdf)
+* Lecture 5 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec05kap.pdf)
 * Lecture 4 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec04kap.pdf)
 * Lecture 3 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec03kap.pdf)
 * Lecture 2 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec02kap.pdf)
@@ -64,11 +68,11 @@ My lectures can be listened to as videos and lecture notes from a previous year 
 I *want* you to come to office hours! My office hours are:
 
 Time / Location: Mon/Wed 4:30-4:55PM / KY 283\
-Time / Location: Mon/Wed 8:05-8:30PM / KY 061\
+Time / Location: Mon/Wed 8:05-8:30PM / KY 061
 
 In addition, the TA will hold office hours as well:
 
-Tony's Time / Location: Tues 5-6PM / on zoom\
+Tony's Time / Location: Tues 5-6PM / on zoom
 
 ## Grades and Class Standing
 
