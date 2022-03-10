@@ -6,6 +6,9 @@ This is the course homepage for Math 390 (and Masters level 690.3) at Queens Col
 
 My lectures can be listened to as videos and lecture notes from a previous year are uploaded as well.
 
+* Lecture 11 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec11kap.pdf)
+* Lecture 10 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec10kap.pdf)
+* Lecture 9 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec09kap.pdf)
 * Lecture 8 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec08kap.pdf)
 * Lecture 7 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec07kap.pdf)
 * Lecture 6 video on slack [(Prof)](https://github.com/kapelner/QC_Math_341_Spring_2021/blob/master/lectures/lec06kap.pdf)
