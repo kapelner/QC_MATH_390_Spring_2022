@@ -34,7 +34,7 @@ My lectures can be listened to as videos and lecture notes from a previous year 
 
 ## Exams
 
-* Midterm I is Wednesday, Mar 2 (in class)
+* Midterm I is Wednesday, Mar 2 (in class) [(exam)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/exams/midterm1/midterm1.pdf) [(solutions)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/exams/midterm1/midterm1_solutions.pdf)
 * Midterm II is Wednesday, Apr 27 (in class)
 * Final is TBA and a final review session instead of the meeting Monday May 16 is TBA
 
