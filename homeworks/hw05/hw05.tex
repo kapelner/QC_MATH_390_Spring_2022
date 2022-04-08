@@ -1,0 +1,239 @@
+\documentclass[12pt]{article}
+
+\include{preamble}
+
+\newtoggle{professormode}
+\toggletrue{professormode} %STUDENTS: DELETE or COMMENT this line
+
+
+
+\title{MATH 390 / 650.3 Spring \the\year~Homework \#5}
+
+\author{Professor Adam Kapelner} %STUDENTS: write your name here
+
+\iftoggle{professormode}{
+\date{Due by email 11:59PM April 28, \the\year \\ \vspace{0.5cm} \small (this document last updated \today ~at \currenttime)}
+}
+
+\renewcommand{\abstractname}{Instructions and Philosophy}
+
+\begin{document}
+\maketitle
+
+\vspace{-0.8cm}
+\iftoggle{professormode}{
+\begin{abstract}
+The path to success in this class is to do many problems. Unlike other courses, exclusively doing reading(s) will not help. Coming to lecture is akin to watching workout videos; thinking about and solving problems on your own is the actual ``working out.''  Feel free to \qu{work out} with others; \textbf{I want you to work on this in groups.}
+
+Reading is still \textit{required}. For this homework set, read about the normal-normal conjugate model and read chapter 15 in McGrayne.
+
+The problems below are color coded: \ingreen{green} problems are considered \textit{easy} and marked \qu{[easy]}; \inorange{yellow} problems are considered \textit{intermediate} and marked \qu{[harder]}, \inred{red} problems are considered \textit{difficult} and marked \qu{[difficult]} and \inpurple{purple} problems are extra credit. The \textit{easy} problems are intended to be ``giveaways'' if you went to class. Do as much as you can of the others; I expect you to attempt the \textit{difficult} problems. 
+
+Problems marked \qu{[MA]} are for the masters students only (those enrolled in the 650.3 course). For those in 341, doing these questions will count as extra credit.
+
+This homework is worth 100 points but the point distribution will not be determined until after the due date. See syllabus for the policy on late homework.
+
+Up to 10 points are given as a bonus if the homework is typed using \LaTeX. Links to instaling \LaTeX~and program for compiling \LaTeX~is found on the syllabus. You are encouraged to use \url{overleaf.com}. If you are handing in homework this way, read the comments in the code; there are two lines to comment out and you should replace my name with yours and write your section. The easiest way to use overleaf is to copy the raw text from hwxx.tex and preamble.tex into two new overleaf tex files with the same name. If you are asked to make drawings, you can take a picture of your handwritten drawing and insert them as figures or leave space using the \qu{$\backslash$vspace} command and draw them in after printing or attach them stapled.
+
+The document is available with spaces for you to write your answers. If not using \LaTeX, print this document and write in your answers. I do not accept homeworks which are \textit{not} on this printout. Keep this first page printed for your records.
+
+\end{abstract}
+
+\thispagestyle{empty}
+\vspace{1cm}
+NAME: \line(1,0){380}
+\clearpage
+}
+
+
+\problem{These are questions about McGrayne's book, chapter 15.}
+
+\begin{enumerate}
+
+\easysubproblem{During the H-Bomb search in Spain and its coastal regions, RAdm. William Guest was busy sending ships here, there and everywhere even if the ships couldn't see the bottom of the ocean. How did Richardson use those useless searches?}\spc{2}
+
+\intermediatesubproblem{When the Navy was looking for the \textit{Scorpion} submarine, they used Monte Carlo methods (which we will see in class soon). How does the description of these methods by Richardson (p199) remind you of the \qu{sampling} techniques to approximate integrals we did in class?}\spc{4}
+
+\intermediatesubproblem{What is a Kalman filter? Read about it online and write a few descriptive sentences.}\spc{4}
+
+
+\intermediatesubproblem{Where do frequentist methods practically break down? (end of chapter 15)}\spc{4}
+
+\end{enumerate}
+
+
+\problem{We now discuss the theory of the normal-normal conjugate model. Assume 
+
+\beqn
+\mathcal{F}: \Xoneton~|~\theta,\sigsq \iid \normnot{\theta}{\sigsq} ~~~\text{and $\sigsq$ known}
+\eeqn 
+
+\noindent and \qu{$X$}, is the usual shorthand for all $\Xoneton$ samples.}
+
+\begin{enumerate}
+
+\easysubproblem{Show that the kernel of the normal distribution is, $\prob{X_1~|~\theta,~\sigsq} \propto k(X_1~|~\theta,~\sigsq) = e^{ax} e^{-bx^2}$ and solve for the values of $a$ and $b$ as functions of $\theta$ and $\sigsq$.}\spc{3}
+
+\hardsubproblem{Assume $\prob{\theta} = \normnot{\mu_0}{\tausq}$. Using the result from (a), show that posterior distribution is normal. Try to do it yourself and only copy from the notes if you must.}\spc{10}
+
+
+\easysubproblem{Find the Bayesian point estimates as function of the data and prior's hyperparameters (i.e. $\thetahatmmse$, $\thetahatmae$ and $\thetahatmap$).}\spc{1}
+
+
+\intermediatesubproblem{On a previous homework we showed that if $\mathcal{F}: \Xoneton~|~\theta,\sigsq \iid \normnot{\theta}{\sigsq}$ then $\thetahatmle = \xbar$. Assuming this MLE, show that $\thetahatmmse$ is a shrinkage estimator and find $\rho$.}\spc{4}
+
+
+\intermediatesubproblem{Rederive the posterior distribution under Laplace's prior of indifference. This is easier than the exercise in (b) as there are less terms.}\spc{3}
+
+\easysubproblem{Assuming $\sigsq = 1.3$, Laplace's prior and a dataset of $n=10$ with values 0.48  0.39  1.29  1.02  1.55 -0.22  0.01 -0.52 -1.50  0.71, provide a Bayesian point estimate.}\spc{1}
+
+\easysubproblem{Assuming the prior, $\sigsq$ and the dataset from (f), provide a 95\% CR for $\theta$.}\spc{1}
+
+\easysubproblem{Assuming the prior, $\sigsq$ and the dataset from (f), provide notation that calculates the $p$ value for a test of $\theta > 1$.}\spc{2}
+
+\intermediatesubproblem{Rederive Jeffrey's prior. Is it proper?}\spc{5}
+
+\intermediatesubproblem{Now let $\tau^2 := \sigsq / n_0$ which is a reparameterization from $\tau^2$ to $n_0$. Substitute this change into the posterior distribution from (b) to derive the posterior distribution under this reparemterization.}\spc{3}
+
+\easysubproblem{Provide pseudocount interpretations of $\mu_0$ and $n_0$.}\spc{2}
+
+\easysubproblem{Using the pseudocount interpretations of $\mu_0$ and $n_0$, what is Haldane's prior of ignorance? Is it proper?}\spc{2}
+
+
+\easysubproblem{If the prior is $\prob{\theta} = \normnot{\mu_0}{\sigsq / n_0}$, write the integral that will compute the posterior predictive distribution $\cprob{X_*}{X, \sigsq}$ when $n_*=1$.}\spc{20}
+
+\hardsubproblem{Compute the posterior predictive distribution $\cprob{X_*}{X, \sigsq}$ when $n_*=1$ using the integral from (m). Try to do it yourself and if you get stuck, look in the notes. Note the change of parameterization from the notes!}\spc{14}
+
+\end{enumerate}
+
+
+\problem{We now discuss the theory of the normal-inverse-gamma conjugate model. Assume 
+
+\beqn
+\mathcal{F}: \Xoneton~|~\theta,\sigsq \iid \normnot{\theta}{\sigsq} ~~~\text{and $\theta$ known}
+\eeqn 
+
+\noindent and \qu{$X$}, is the usual shorthand for all $\Xoneton$ samples.}
+
+\begin{enumerate}
+
+\easysubproblem{Find the kernel of $\cprob{X}{\theta,~\sigsq}$.}\spc{3}
+
+\easysubproblem{Assume $\prob{\sigsq} \propto 1$ and then find the kernel of $\cprob{\sigsq}{X, \theta}$. Substitute in the MLE for $\sigsq$.}\spc{3}
+
+
+\easysubproblem{Time for proving the calculus exercise that I always skip. Prove that 
+
+\beqn
+\int^\infty_0 y^{\alpha - 1} e^{-\beta y} = \frac{\Gammaf{\alpha}}{\beta^\alpha}.
+\eeqn
+
+This completes the proof that the kernel in (b) is inverse gamma (see lecture 17).}\spc{6}
+
+
+\easysubproblem{What is the parameter space of the inverse gamma r.v.? What is its mean? Mode? Is there a formula for the median in closed form?}\spc{2}
+
+
+\easysubproblem{Show that posterior of $\sigsq~|~X,~\theta$ is inverse gamma (and find the posterior parameters).}\spc{5}
+
+
+\easysubproblem{Plot a few PDF's of inverse gammas with different parameters to illustrate the different possible shapes.}\spc{9}
+
+\hardsubproblem{Show that posterior of $\sigsq~|~X,~\theta$ is inverse gamma (and find the posterior parameters) if $\prob{\sigsq} = \invgammanot{\overtwo{n_0}}{\overtwo{n_0 \sigsq_0}}$. Try to do it yourself and only copy from the notes if you have to.}\spc{5}
+
+
+\easysubproblem{What is the pseudodata interpretation of the hyperparameters $n_0$ and $\sigsq_0$?}\spc{1}
+
+\easysubproblem{Based on the pseudodata interpretation of the hyperparameters $n_0$ and $\sigsq_0$, what would Haldane's prior be and why?}\spc{1}
+
+\hardsubproblem{In the Laplace prior, what are the hyperparameters?}\spc{2}
+
+\hardsubproblem{Why is the Laplace prior a bad idea to use in this modeling setting?}\spc{5}
+
+\intermediatesubproblem{[MA] Find the Fisher information for $\sigsq$ if $\theta$ is known.}\spc{9}
+
+\intermediatesubproblem{[MA] Show the Jeffrey's Prior for inference on $\sigsq$ if $\theta$ is known is $\propto \inverse{\sigsq}$.}\spc{2}
+
+\easysubproblem{Provide all three Bayesian point estimates for $\sigsq$ given $\theta$.}\spc{1}
+
+\easysubproblem{Show that the $\thetahatmmse$ is a linear shrinkage estimator. Is it valid for every inverse gamma prior?}\spc{3}
+
+\intermediatesubproblem{Show that the $\thetahatmap$ is a linear shrinkage estimator (i.e. a linear combination of the MLE and the prior mode). Is it valid for every inverse gamma prior?}\spc{3}
+
+\hardsubproblem{[MA] Show that predictive distribution of $X^*~|~X,~\theta$ is non-standard Student's $t$ distribution if $n^*=1$ and $\theta \sim \invgammanot{\overtwo{n_0}}{\overtwo{n_0 \sigsq_0}}$ by solving the integral. Try to do it yourself and only copy from the notes if you have to!}\spc{25}
+
+
+\end{enumerate}
+
+
+\input{R_equations_table}
+
+\problem This question is about building models for the prices of cars sold at dealerships.
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=2.7in]{accord.jpg}
+\end{figure}
+
+The 2016 Honda Accord sells at many different dealerships in New York City but sell it for more and some for less. We'll assume that the final negotiated price is distributed normally because it's most likely the sum of many different negotiation factors.
+
+Our goal here is to determine the mean price at a certain car dealership in Astoria that people have been saying is \qu{too cheap} and if it's too cheap, Honda corporate may wish to investigate.
+
+\begin{enumerate}
+
+
+
+\easysubproblem{Assume that each Accord's price at the Astoria dealership is normal and $\iid$ given the parameters. Is this a good model? Why or why not? There is no \qu{correct} answer here but I expect you to defend whatever answer you write using the concepts we discussed in class.} \spc{6}
+
+\easysubproblem{Despite what you wrote in (b), assume $\iid$ for the rest of the problem. The nationwide variance for a Honda Accord selling price we're going to assume is $\sigsq = \$1000^2$. Given a sample with average $\xbar$ and sample size $n$, what is the distribution of the mean price of a car from this shady Astoria dealership? Assume an uninformative prior of your choice but ensure to explicitly state it.}\spc{5}
+
+\intermediatesubproblem{You and your colleague go down to the Astoria dealership undercover and ask to buy a Honda. After much negotiation, they will sell it to you for \$19,000 and they will sell it to your colleague for \$18,200 but they sense something suspicious so you hesitate to send another one of your guys down there to do another faux negotiation. Unfortunately, we're going to have to estimate the mean with just $x_1=19000$ and $x_2 = 18200$. What is your best guess of the mean price of Honda Accords sold here? Assume your prior from (a). Compute explicitly as a number rounded to two decimals. }\spc{2}
+
+\easysubproblem{What is the shrinkage value (which we have been denoting $\rho$) for this estimate? Compute explicitly as a number rounded to two decimals.}\spc{1}
+
+\intermediatesubproblem{Based on this data, we wish to test if this dealership is selling Honda Accords below the manufacturer sugested retail price (MSRP) of \$22,205 --- if so, they would be subject to a fine. Calculate a $p$-value for this test below by using notation from Table~\ref{tab:eqs} but do not solve numerically.}\spc{4}
+
+\hardsubproblem{What is the probability I get a really good deal --- that I can buy a car from these Astoria people for under \$17,000? Use the notation from Table~\ref{tab:eqs} but do not solve numerically.}\spc{3}
+
+
+\intermediatesubproblem{Find a 95\% posterior predictive interval (PI) for the price of the next car.}\spc{3}
+
+\end{enumerate}
+
+\problem This question is about building a model to understand the accuracy of this beverage-filling machine pictured below:
+
+\begin{figure}[htp]
+\centering
+\includegraphics[width=3.7in]{milk_filling.jpg}
+\end{figure}
+
+This machine fills 12oz plastic bottles. There is no doubt the mean amount of liquid filled per bottle is 12oz as been determined by the final weights of pallets of filled bottles. But we are uncertain about the variance. We decide to do an experiment and select $n = 21$ bottles at random and measure the amount of liquid in each bottle. Here are the measurements:
+
+\begin{verbatim}
+                   12.00 12.05 11.98 11.66 12.05 11.92 12.03
+                   12.23 12.36 11.57 12.04 12.10 11.99 12.47
+                   12.57 11.83 12.20 12.48 12.14 12.14 12.74
+\end{verbatim}
+
+\begin{enumerate}
+
+\easysubproblem{Write a parametric model $\mathcal{F}$ below for the amount of milk in each of the $n$ bottles. Hint: use the normal model!}\spc{1}
+
+\easysubproblem{Find the MLE for $\sigsq$. Compute explicitly as a number rounded to two decimals.}\spc{1}
+
+\easysubproblem{Under the Jeffrey's prior for $\sigsq$, find the posterior of $\sigsq$ by solving for the parameter values.}\spc{1}
+
+\intermediatesubproblem{Write an expression for the 95\% left-sided credible region for $\sigsq$. (This will give the upper bound for the machine's variance).}\spc{1}
+
+
+\intermediatesubproblem{The bottles are actually 13.5oz. This means that you wish to test if $\sigsq > 0.352$ for if so, about 1/100,000 of the bottles will be overfull and that's the tolerance of the factory. Write an expression for the Bayesian p-value of this test.}\spc{2}
+
+
+\intermediatesubproblem{Write an expression for the probability the next bottle has more than 13oz of liquid.}\spc{2}
+
+\intermediatesubproblem{Write an expression for the 95\% posterior predictive interval (PI) for the amount of liquid in the next bottle.}\spc{3}
+\end{enumerate}
+
+
+
+\end{document}
