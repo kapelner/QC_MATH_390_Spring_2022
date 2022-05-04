@@ -34,8 +34,8 @@ My lectures can be listened to as videos and lecture notes from a previous year 
 
 <!--
 * Homework 8 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw08/hw08.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw08/hw08.pdf) (due 5/19)
-* Homework 7 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw07/hw07.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw07/hw07.pdf) (NOT DUE)
-* Homework 6 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw06/hw06.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw06/hw06.pdf) (due 4/26)-->
+* Homework 7 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw07/hw07.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw07/hw07.pdf) (NOT DUE)-->
+* Homework 6 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw06/hw06.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw06/hw06.pdf) (due 5/22)
 * Homework 5 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw05/hw05.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw05/hw05.pdf) (due 4/28)
 * Homework 4 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw04/hw04.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw04/hw04.pdf) (due 4/5)
 * Homework 3 [(download)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw03/hw03.pdf?raw=true) [(view)](https://github.com/kapelner/QC_Math_390_Spring_2022/blob/master/homeworks/hw03/hw03.pdf) (due 3/24)
