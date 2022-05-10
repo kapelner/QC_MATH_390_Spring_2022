@@ -1,44 +1,57 @@
-library(tidyverse)
+pacman::p_load(MCMCpack)
+
 set.seed(1984)
 n = 300
 
-true_lambda_1 = 0.7
-true_lambda_2 = 7
+true_theta_1 = 0
+true_theta_2 = 4
+true_sigsq_1 = 2
+true_sigsq_2 = 1
 true_rho = 0.3
 
 
-x = c(rpois(n * true_rho, true_lambda_1), rpois(n * (1 - true_rho), true_lambda_2))
+x = sort(c(rnorm(n * true_rho, true_theta_1, sqrt(true_sigsq_1)), rnorm(n * (1 - true_rho), true_theta_2, sqrt(true_sigsq_2))))
 
-ggplot(data.frame(x = x)) + geom_bar(aes(x = x)) + xlab("number of calls in a given day")
+par(mfrow = c(1, 1))
+hist(x, br = 80) 
 #plot
 
 
 #chains
 S = 10000
-lambda1s = array(NA, S)
-lambda2s = array(NA, S)
+theta1s = array(NA, S)
+theta2s = array(NA, S)
+sigsq1s = array(NA, S)
+sigsq2s = array(NA, S)
 rhos = array(NA, S)
 Is = matrix(NA, nrow = n, ncol = S)
 #start positions
-lambda1s[1] = mean(x)
-lambda2s[1] = mean(x)
+theta1s[1] = quantile(x, .25) #ensure one begins lower than other
+theta2s[1] = quantile(x, .75) #ensure one begins lower than other
+sigsq1s[1] = var(x)
+sigsq2s[1] = var(x)
 rhos[1] = 0.5
-Is[, 1] = 0.5 
+Is[1 : (n / 2), 1] = 1
+Is[(n / 2 + 1) : n, 1] = 0
 
 for (t in 2 : S){
-  lambda1 = lambda1s[t - 1]
-  lambda2 = lambda2s[t - 1]
+  theta1 = theta1s[t - 1]
+  theta2 = theta2s[t - 1]
+  sigsq1 = sigsq1s[t - 1]
+  sigsq2 = sigsq2s[t - 1]
   rho = rhos[t - 1]
   I = Is[, t - 1]
   
   sum_I = sum(I)
   sum_1_min_I = n - sum_I
-  lambda1s[t] = rgamma(1, sum(I * x) + 1, sum_I)
-  lambda2s[t] = rgamma(1, sum((1 - I) * x) + 1, sum_1_min_I)
+  theta1s[t] = rnorm(1, sum(I * x) / sum_I, sqrt(sigsq1 / sum_I))
+  theta2s[t] = rnorm(1, sum((1 - I) * x) / sum_1_min_I, sqrt(sigsq2 / sum_1_min_I))
+  sigsq1s[t] = rinvgamma(1, sum_I / 2, sum(I * (x - theta1s[t])^2) / 2)
+  sigsq2s[t] = rinvgamma(1, sum_1_min_I / 2, sum((1 -I) * (x - theta2s[t])^2) / 2)
   
   for (i in 1 : n){#now draw the Is
-    a = exp(-lambda1s[t]) * lambda1s[t]^x[i] * rho
-    b = exp(-lambda2s[t]) * lambda2s[t]^x[i] * (1 - rho)
+    a = rho * dnorm(x[i], theta1s[t], sqrt(sigsq1s[t]))
+    b = (1 - rho) * dnorm(x[i], theta2s[t], sqrt(sigsq2s[t]))
     Is[i, t] = rbinom(1, 1, a / (a + b))
     # cat("a =", a, "b = ", b, "p =", a / (a + b), "I =", Is[i, t], "\n")
   }
@@ -51,72 +64,93 @@ for (t in 2 : S){
 ###assess convergence
 #plot
 ###
-par(mfrow = c(3, 1))
-S0 = 50
-plot(1 : S0, lambda1s[1 : S0], ylab = "lambda_1")
-# abline(h = mean(lambda1s[B : S0]), col = "blue")
+par(mfrow = c(5, 1))
+S0 = 150
+plot(1 : S0, theta1s[1 : S0])
+abline(h = mean(theta1s[B : S0]), col = "blue")
 # abline(h = true_theta_1, col = "red")
 # abline(v = B, col = "grey")
 
-plot(1 : S0, lambda2s[1 : S0], ylab = "lambda_2")
-# abline(h = mean(lambda2s[B : S0]), col = "blue")
+plot(1 : S0, theta2s[1 : S0])
+abline(h = mean(theta2s[B : S0]), col = "blue")
 # abline(h = true_theta_2, col = "red")
 # abline(v = B, col = "grey")
 
-plot(1 : S0, rhos[1 : S0], ylab = "rho")
-# abline(h = mean(rhos[B : S0]), col = "blue")
+plot(1 : S0, sigsq1s[1 : S0])
+abline(h = mean(sigsq1s[B : S0]), col = "blue")
+# abline(h = sqrt(true_sigsq_1), col = "red")
+# abline(v = B, col = "grey")
+
+plot(1 : S0, sigsq2s[1 : S0])
+abline(h = mean(sigsq2s[B : S0]), col = "blue")
+# abline(h = sqrt(true_sigsq_2), col = "red")
+# abline(v = B, col = "grey")
+
+plot(1 : S0, rhos[1 : S0])
+abline(h = mean(rhos[B : S0]), col = "blue")
 # abline(h = sqrt(true_rho), col = "red")
 # abline(v = B, col = "grey")
 #plot
-B = 20
+
+
+B = 50
 
 ##assess autocorrelation
 
-par(mfrow = c(3, 1))
-Kmax = 10
-corr_max = 0.5
-corr_min = -0.01
-acf(lambda1s[B : S], xlim = c(0, Kmax), ylim = c(corr_min, corr_max), lag.max = Kmax)
-acf(lambda2s[B : S], xlim = c(0, Kmax), ylim = c(corr_min, corr_max), lag.max = Kmax)
-acf(rhos[B : S], xlim = c(0, Kmax), ylim = c(corr_min, corr_max), lag.max = Kmax)
-THIN = 6
+par(mfrow = c(5, 1))
+Kmax = 45
+acf(theta1s[B : S], xlim = c(0, Kmax), lag.max = Kmax)
+acf(theta2s[B : S], xlim = c(0, Kmax), lag.max = Kmax)
+acf(sigsq1s[B : S], xlim = c(0, Kmax), lag.max = Kmax)
+acf(sigsq2s[B : S], xlim = c(0, Kmax), lag.max = Kmax)
+acf(rhos[B : S], xlim = c(0, Kmax), lag.max = Kmax)
+THIN = 26
 #plot
 
 #burn and thin
-lambda1s = lambda1s[B : S]
-lambda1s = lambda1s[seq(1, S - B, by = THIN)]
-lambda2s = lambda2s[B : S]
-lambda2s = lambda2s[seq(1, S - B, by = THIN)]
+theta1s = theta1s[B : S]
+theta1s = theta1s[seq(1, S - B, by = THIN)]
+theta2s = theta2s[B : S]
+theta2s = theta2s[seq(1, S - B, by = THIN)]
+sigsq1s = sigsq1s[B : S]
+sigsq1s = sigsq1s[seq(1, S - B, by = THIN)]
+sigsq2s = sigsq2s[B : S]
+sigsq2s = sigsq2s[seq(1, S - B, by = THIN)]
 rhos = rhos[B : S]
 rhos = rhos[seq(1, S - B, by = THIN)]
 Is = Is[, B : S]
 Is = Is[, seq(1, S - B, by = THIN)]
+Is[1, ]
+Is[n, ]
+
 
 #look at posteriors with post-exp at 95% CI
-par(mfrow = c(1, 1))
-res = 100
+par(mfrow = c(5, 1))
+res = 200
 
-ggplot(data.frame(lambda1s = lambda1s)) + geom_histogram(aes(x = lambda1s), bins = res)
-ggplot(data.frame(lambda2s = lambda2s)) + geom_histogram(aes(x = lambda2s), bins = res)
-ggplot(data.frame(rhos = rhos)) + geom_histogram(aes(x = rhos), bins = res)
-ggplot(data.frame(Is = factor(Is[31, ]))) + geom_bar(aes(x = Is))
-ggplot(data.frame(Is = factor(Is[102, ]))) + geom_bar(aes(x = Is))
-
-round(rbind(lambda1s, lambda2s, rhos)[, 1: 20], 3)
-
-
-
-par(mfrow = c(3, 1))
-abline(v = mean(lambda1s), col = "blue", lwd = 3)
-abline(v = quantile(lambda1s, 0.025), col = "grey", lwd = 3)
-abline(v = quantile(lambda1s, 0.975), col = "grey", lwd = 3)
+hist(theta1s, br = res)
+abline(v = mean(theta1s), col = "blue", lwd = 3)
+abline(v = quantile(theta1s, 0.025), col = "grey", lwd = 3)
+abline(v = quantile(theta1s, 0.975), col = "grey", lwd = 3)
 abline(v = true_theta_1, col = "red", lwd = 3)
 
-hist(lambda2s, br = res)
-abline(v = mean(lambda2s), col = "blue", lwd = 3)
-abline(v = quantile(lambda2s, 0.025), col = "grey", lwd = 3)
-abline(v = quantile(lambda2s, 0.975), col = "grey", lwd = 3)
+hist(theta2s, br = res)
+abline(v = mean(theta2s), col = "blue", lwd = 3)
+abline(v = quantile(theta2s, 0.025), col = "grey", lwd = 3)
+abline(v = quantile(theta2s, 0.975), col = "grey", lwd = 3)
 abline(v = true_theta_2, col = "red", lwd = 3)
+
+hist(sigsq1s, br = res)
+abline(v = mean(sigsq1s), col = "blue", lwd = 3)
+abline(v = quantile(sigsq1s, 0.025), col = "grey", lwd = 3)
+abline(v = quantile(sigsq1s, 0.975), col = "grey", lwd = 3)
+abline(v = true_sigsq_1, col = "red", lwd = 3)
+
+hist(sigsq2s, br = res)
+abline(v = mean(sigsq2s), col = "blue", lwd = 3)
+abline(v = quantile(sigsq2s, 0.025), col = "grey", lwd = 3)
+abline(v = quantile(sigsq2s, 0.975), col = "grey", lwd = 3)
+abline(v = true_sigsq_2, col = "red", lwd = 3)
 
 hist(rhos, br = res)
 abline(v = mean(rhos), col = "blue", lwd = 3)
@@ -124,3 +158,8 @@ abline(v = quantile(rhos, 0.025), col = "grey", lwd = 3)
 abline(v = quantile(rhos, 0.975), col = "grey", lwd = 3)
 abline(v = true_rho, col = "red", lwd = 3)
 #plot
+
+Is[1, ]
+Is[n, ]
+Is[n / 2, ]
+mean(Is[n / 2, ])
