@@ -1,0 +1,613 @@
+\documentclass[12pt]{article}
+
+\include{preamble}
+\usepackage{multicol}
+
+\title{Math 390 / 650 Spring \the\year \\ Final Examination}
+\author{Professor Adam Kapelner}
+
+\date{Monday, May 23}
+
+\begin{document}
+\maketitle
+
+\noindent Full Name \line(1,0){410}
+
+\thispagestyle{empty}
+
+\section*{Code of Academic Integrity}
+
+\footnotesize
+Since the college is an academic community, its fundamental purpose is the pursuit of knowledge. Essential to the success of this educational mission is a commitment to the principles of academic integrity. Every member of the college community is responsible for upholding the highest standards of honesty at all times. Students, as members of the community, are also responsible for adhering to the principles and spirit of the following Code of Academic Integrity.
+
+Activities that have the effect or intention of interfering with education, pursuit of knowledge, or fair evaluation of a student's performance are prohibited. Examples of such activities include but are not limited to the following definitions:
+
+\paragraph{Cheating} Using or attempting to use unauthorized assistance, material, or study aids in examinations or other academic work or preventing, or attempting to prevent, another from using authorized assistance, material, or study aids. Example: using an unauthorized cheat sheet in a quiz or exam, altering a graded exam and resubmitting it for a better grade, etc.
+\\
+
+\noindent I acknowledge and agree to uphold this Code of Academic Integrity. \\
+
+\begin{center}
+\line(1,0){250} ~~~ \line(1,0){100}\\
+~~~~~~~~~~~~~~~~~~~~~signature~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ date
+\end{center}
+
+\normalsize
+
+\section*{Instructions}
+
+This exam is seventy five minutes and closed-book. You are allowed \textbf{three} pages (front and back) of a \qu{cheat sheet.} You may use a graphing calculator of your choice. Please read the questions carefully. If the question reads \qu{compute,} this means the solution will be a number otherwise you can leave the answer in \textit{any} widely accepted mathematical notation which could be resolved to an exact or approximate number with the use of a computer. I advise you to skip problems marked \qu{[Extra Credit]} until you have finished the other questions on the exam, then loop back. I also advise you to use pencil. The exam is 100 points total plus extra credit. Partial credit will be granted for incomplete answers on most of the questions. \fbox{Box} in your final answers. NO FOOD but drinks okay. Good luck!
+
+\pagebreak
+
+\problem You take a sample of $n=200$ American people at random and measure their heights. According to \href{https://www.usablestats.com/lessons/normal}{this approximation}, male height is normally distributed with mean $\theta_M = 70$ inches and $\sigsq_M = 4^2$ squared-inches and female height is normally distributed with mean $\theta_F = 65$ inches and $\sigsq_F = 3.5^2$ squared-inches. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=4in]{men_women_height_histogram.jpg}
+\end{figure}
+
+\noindent We can assume this approximation is the truth i.e. $\theta_M, \theta_F, \sigsq_M, \sigsq_F$ are known and male heights are $\iid \normnot{\theta_M}{\sigsq_M}$ and female heights are $\iid \normnot{\theta_F}{\sigsq_F}$. We don't know the \emph{proportion} of males in our sample of $n$ people and we'll denote this proportion $\rho$ which is our main target of inference with $\support{\rho} = \zeroonecl$. Let $X_1, X_2, \ldots, X_n$ denote the measured heights in the sample.
+
+
+\benum
+
+\subquestionwithpoints{3} Write out the explicit PDF of the likelihood of the data given all the parameters: $\theta_M, \theta_F, \sigsq_M, \sigsq_F, \rho$.\spc{4}
+
+\subquestionwithpoints{3} Why would it be difficult to find a closed-form solution for $\doublehat{\rho}_{\text{MLE}}$ given the likelihood you found in (a)? Write a couple sentences in English to answer.\spc{4}
+
+We now \qu{augment the data} by introducing the parameters $I_1, I_2, \ldots, I_n$
+
+\beqn
+I_i := \begin{cases}
+	1 ~~~ \text{if the $i$th data point is male, coming from the}~\normnot{\theta_M}{\sigsq_M} \text{distribution}\\
+	 0 ~~~\text{if the $i$th data point is female, coming from the}~\normnot{\theta_F}{\sigsq_F} \text{distribution}
+\end{cases}
+\eeqn
+\subquestionwithpoints{4} Write out the explicit PDF of the likelihood of the data given all the parameters and the parameters under data augmentation $\theta_M, \theta_F, \sigsq_M, \sigsq_F, \rho, I_1, I_2, \ldots, I_n$. Simplify as much as possible.\spc{5}
+
+
+\subquestionwithpoints{3} Since $\theta_M, \theta_F, \sigsq_M, \sigsq_F$ are assumed known constants, we do not need to specify a prior for them. Specify the Laplace prior for $\rho$ explicitly. Do not simply write $\prob{\rho} \propto 1$. You need to write $\prob{\rho} = $ a legal distribution.\spc{0.3}
+
+\subquestionwithpoints{3} Specify the Laplace prior for all the $I_i$'s explicitly. Do not simply write $\prob{I_i} \propto 1$. You need to write $\forall i~~\prob{I_i} = $ a legal distribution.\spc{0.3}
+
+\subquestionwithpoints{4} Regardless of what you wrote for the previous two questions, you can now assume that $\prob{\rho, I_1, I_2, \ldots, I_n} \propto 1$. Find the kernel of the posterior as best as possible $k(\rho, I_1, I_2, \ldots, I_n\,|\,X_1, X_2, \ldots, X_n, \theta_M, \theta_F, \sigsq_M, \sigsq_F)$.\spc{6}
+
+\subquestionwithpoints{4} The kernel you found in the previous example is not any known distribution that you know how to sample from. Thus we will employ a Gibbs sampler. Find the conditional distribution $\cprob{\rho}{I_1, I_2, \ldots, I_n, \theta_M, \theta_F, \sigsq_M, \sigsq_F, X_1, X_2, \ldots, X_n}$. It will be a known distribution. Compute its parameters.\spc{5.2}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{burn}
+\end{figure}
+\vspace{-0.5cm}
+\subquestionwithpoints{1} Above is the first 100 samples from the Gibbs sampler's conditional distribution $\cprob{\rho}{I_1, I_2, \ldots, I_n, \theta_M, \theta_F, \sigsq_M, \sigsq_F, X_1, X_2, \ldots, X_n}$. At what approximate iteration number would you burn?\spc{0}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{ar}
+\end{figure}
+\vspace{-0.5cm}
+\subquestionwithpoints{2} Above is an autocorrelation plot of post-burned samples from the Gibbs sampler's conditional distribution  $\cprob{\rho}{I_1, I_2, \ldots, I_n, \theta_M, \theta_F, \sigsq_M, \sigsq_F, X_1, X_2, \ldots, X_n}$. At what approximate iteration number would you thin?\spc{0}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{rhos}
+\end{figure}
+\vspace{-0.5cm}
+\subquestionwithpoints{2} Above is the post-burned and thinned samples from the Gibbs sampler's conditional distribution  $\cprob{\rho}{I_1, I_2, \ldots, I_n, \theta_M, \theta_F, \sigsq_M, \sigsq_F, X_1, X_2, \ldots, X_n}$. Estimate $\doublehat{\rho}_{\text{MMAE}}$.\spc{0}
+
+\subquestionwithpoints{2} Provide an estimated $CR_{\rho, 95\%}$.\spc{0}
+
+\subquestionwithpoints{5} Test the theory that this sample has an equal number of men and women. Show all work and be explicit about your assumptions. Write a concluding statement.\spc{4}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{I}
+\end{figure}
+\vspace{-0.5cm}
+
+\subquestionwithpoints{2} Above is the post-burned and thinned samples from the Gibbs sampler's conditional distribution  $\cprob{I_1}{\rho, I_2, \ldots, I_n, \theta_M, \theta_F, \sigsq_M, \sigsq_F, X_1, X_2, \ldots, X_n}$. Estimate the value of $\doublehat{I}_{1, \text{MMSE}}$ to two digits. \spc{0}
+
+\subquestionwithpoints{1} Estimate the probability that the first subject is a male. \spc{0}
+
+\subquestionwithpoints{4} Explain a step-by-step method for drawing $X_*$, a new observation from the random variable model that produced the $\Xoneton$ data observations. Use the notation found in Table~\ref{tab:eqs} if applicable. \spc{5}
+
+\eenum
+
+\problem Human birth weight is known to be normally distributed. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=2.5in]{babies.jpg}
+\end{figure}
+
+
+\noindent We measure $\braces{8.28, 7.65, 8.88, 7.80, 7.58, 6.96, 7.44, 7.34, 6.89, 6.97}$, a sample of $n=10$ birth weights measured in pounds. Its associated sample statistics are: $\xbar = 7.58$ and $s^2 = 0.39$. We cannot assume we know the true mean nor the true variance of the random variable that produced this data set. Assume Jeffrey's prior going forward.
+
+
+\benum
+
+\subquestionwithpoints{2} Find $\thetahathatmmae$ to the nearest two digits. \spc{2}
+\subquestionwithpoints{3} Find $\sigsqshathatmmse$ to the nearest two digits. \spc{2.5}
+
+\subquestionwithpoints{4} Plot the bivariate density of $\cprob{\theta,\sigsq}{X}$ as best as you can. \spc{7}
+
+\subquestionwithpoints{4} Compute the Bayesian $p$-val for the theory that this sample's mean is underweight i.e. $H_a: \theta < 7.72$lb. \spc{3}
+
+\subquestionwithpoints{4} Find an expression for the probability the next child in this sample will be underweight. \spc{3}
+
+
+\eenum
+
+
+\problem Below are some pure computation problems based on theory from this class. Solve for them using precise mathematical notation (no approximations with decimals). Simplify if possible.
+
+
+\benum
+
+\subquestionwithpoints{4} $\displaystyle \int_0^\infty x^{-17} e^{-\pi / x}dx$ \spc{2}
+
+%\subquestionwithpoints{4} $\int_\reals e^{\pi x}e^{- x^2}dx$ \spc{2}
+
+\subquestionwithpoints{3} $B(4,8)$ \spc{1.5}
+
+\subquestionwithpoints{5} $\displaystyle \sum_{x=0}^n \frac{ \Gammaf{x + \alpha} \Gammaf{n - x + \beta}}{ x! (n-x)! }$ where $n \in \naturals$ and $\alpha > 0, \beta > 0$ \spc{4}
+
+
+\subquestionwithpoints{5} $\displaystyle \int_\reals \tothepow{(x - \pi)^2 + 2}{-n/2}dx$ where $n \in \naturals$ \spc{5}
+
+\eenum
+
+\problem This question is about ratings on youtube. Each video which is voted on is either up-voted or down-voted. A video rating is the total number of thumbs up ratings over the total number of ratings. For example if a movie gets 5080 thumbs up and 960 thumbs down ratings, then it has a 5080/(5080 + 960) = 84.1\% approval rating.  
+
+But there is a question: how should we order videos by \emph{true} approval rating $\theta \in (0,1)$? For example, here is a table of four videos we wish to order:
+
+\begin{table}[htp]
+\centering
+\begin{tabular}{ccccc}
+Video Name & \# Up votes & \# Down votes & $n$ & Approval Rating \\ \hline
+A & 0 & 1 & 1 & 0.0\% \\
+B & 4 & 0 & 4 & 100.0\% \\
+C & 25 & 2 & 27 & 92.6\% \\
+D & 5080 & 960 & 6040 & 84.1\% \\
+\end{tabular}
+\caption{Table of videos with their youtube ratings.}
+\label{tab:ratings}
+\end{table}
+
+%xs = c(rbeta(2e4, 3, 1), rbeta(1e4,750, 250))
+%%hist(xs, br = 100)
+%fw <- fitdist(xs, "beta")
+%plot(fw)
+%fw
+
+
+
+\benum
+
+\subquestionwithpoints{1} Order the movies in Table~\ref{tab:ratings} by name from best to worst using the MLE estimate of its true approval rating. Your answer must be in the format \qu{$A > B > C > D$} where $A$ is the highest-rated and $D$ is the lowest-rated. \spc{1} %M1
+
+\subquestionwithpoints{3} Why is what you did in (a) a poor way to order the four movies?\spc{2} %M1
+
+\subquestionwithpoints{1} We are now going to use some previous data to create a prior for the true approval rating. What is this kind of procedure is called (two words)?\spc{0.3} %M2
+
+Below is a histogram of the approval ratings of $n_0 = 30,000$ videos of which there are more than 200 votes each. The curve displayed atop the histogram is the best fit beta density. I used \texttt{R}'s  \texttt{fitdistrplus} package which creates a fit via the MLE's of $\alpha$ and $\beta$. I include estimates in output from \texttt{R} below the plot. 
+
+  \begin{multicols}{2}
+
+\includegraphics[width=3in]{fitdist.png}
+
+
+
+ \begin{minipage}{0.4\linewidth}
+\vspace{2cm}
+\begin{verbatim}
+Parameters:
+       estimate Std. Error
+shape1 4.283762 0.03567291
+shape2 1.442157 0.01073980
+\end{verbatim}
+    \end{minipage}
+  \end{multicols}
+
+
+
+
+\subquestionwithpoints{3} Besides the fact that the curve does not fit the empirical distribution (given by the histogram), what is wrong with the estimates of $\alpha$ and $\beta$ given above? Hint: think about pseudocounts. \spc{5} %M1
+
+\subquestionwithpoints{3} Given that a movie has $n$ total votes and $x$ of those are thumbs up, what is the posterior distribution of the true approval rating $\theta$ given the data coupled with the prior constructed above in the illustration before question (d)?\spc{1} %M1
+
+\subquestionwithpoints{4} Order the movies in Table~\ref{tab:ratings} from best to worst using the Bayesian estimate which minimizes mean squared error. Your answer must be in the format \qu{$A > B > C > D$} where $A$ is the highest-rated and $D$ is the lowest-rated. Compute explicitly. No credit unless work is shown. \spc{3} 
+\eenum
+
+\problem Continuing the question from before, there is reason to believe that the average approval rating is trending over time. To test this, we sample the same number $n$ samples every day for $t \in \braces{1, \ldots, T}$ days and assume that $X_t \inddist \binomial{n}{\theta_t}$ where $\theta_t := \beta_0 + \beta_1 t$.
+
+\beqn
+\text{The likelihood is:}~\cprob{X_1, \ldots, X_T}{n, T, \beta_0, \beta_1} = \prod_{t=1}^T \binom{n}{x_t} \tothepow{\beta_0 + \beta_1 t}{x_t} \tothepow{1 - \beta_0 - \beta_1 t}{n - x_t}.
+\eeqn
+
+\noindent We'll assume Laplace priors for $\beta_0$ and $\beta_1$ i.e. $\prob{\beta_0, \beta_1} \propto 1$ and that $n$ is known.
+
+
+
+\benum
+
+\subquestionwithpoints{3} Find $k(\beta_0\,|\, \beta_1, X_1, \ldots, X_T, n, T)$. \spc{2}
+
+\subquestionwithpoints{3} Find $k(\beta_1\,|\, \beta_0, X_1, \ldots, X_T, n, T)$. \spc{2}
+
+\subquestionwithpoints{2} If you were to create a Gibbs sampler using both $k(\beta_0\,|\, \beta_1, X_1, \ldots, X_T, n, T)$ and $k(\beta_1\,|\, \beta_0, X_1, \ldots, X_T, n, T)$, what is the name of one algorithm that could be used when sampling $\beta_0$? \spc{0.5}
+
+\eenum
+
+
+
+\begin{table}[htp]
+\centering
+\small
+\begin{tabular}{l | llll}
+Distribution                  & Quantile  & PMF / PDF  &CDF       & Sampling  \\ 
+of r.v. &  Function & function         & function &  Function \\ \hline
+beta & \texttt{qbeta}($p$, $\alpha$, $\beta$)             
+& \texttt{d-}($x$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $\alpha$, $\beta$) 
+& \texttt{r-}($\alpha$, $\beta$) \\
+betabinomial & \texttt{qbetabinom}($p$, $n$, $\alpha$, $\beta$)              
+& \texttt{d-}($x$, $n$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $n$, $\alpha$, $\beta$) 
+& \texttt{r-}($n$, $\alpha$, $\beta$) \\
+
+betanegativebinomial & \texttt{qbeta\_nbinom}($p$, $r$, $\alpha$, $\beta$) 
+& \texttt{d-}($x$, $r$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $r$, $\alpha$, $\beta$) 
+& \texttt{r-}($r$, $\alpha$, $\beta$) \\
+
+binomial & \texttt{qbinom}($p$, $n$, $\theta$) 
+& \texttt{d-}($x$, $n$, $\theta$)
+& \texttt{p-}($x$, $n$, $\theta$) 
+& \texttt{r-}($n$, $\theta$) \\
+
+exponential & \texttt{qexp}($p$, $\theta$) 
+& \texttt{d-}($x$, $\theta$) 
+& \texttt{p-}($x$, $\theta$) 
+& \texttt{r-}($\theta$) \\
+
+gamma & \texttt{qgamma}($p$, $\alpha$, $\beta$) 
+& \texttt{d-}($x$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $\alpha$, $\beta$) 
+& \texttt{r-}($\alpha$, $\beta$) \\
+
+geometric & \texttt{qgeom}($p$, $\theta$) 
+& \texttt{d-}($x$, $\theta$)
+& \texttt{p-}($x$, $\theta$) 
+& \texttt{r-}($\theta$) \\
+
+inversegamma & \texttt{qinvgamma}($p$, $\alpha$, $\beta$) 
+& \texttt{d-}($x$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $\alpha$, $\beta$) 
+& \texttt{r-}($\alpha$, $\beta$) \\
+
+negative-binomial & \texttt{qnbinom}($p$, $r$, $\theta$) 
+& \texttt{d-}($x$, $r$, $\theta$) 
+& \texttt{p-}($x$, $r$, $\theta$) 
+& \texttt{r-}($r$, $\theta$) \\
+
+normal (univariate) & \texttt{qnorm}($p$, $\theta$, $\sigma$) 
+& \texttt{d-}($x$, $\theta$, $\sigma$)
+& \texttt{p-}($x$, $\theta$, $\sigma$) 
+& \texttt{r-}($\theta$, $\sigma$) \\
+
+%normal (multivariate) & 
+%& \multicolumn{2}{l}{\texttt{dmvnorm}($\x$, $\muvec$, $\bSigma$)} 
+%& \texttt{r-}($\muvec$, $\bSigma$) \\
+
+poisson & \texttt{qpois}($p$, $\theta$) 
+& \texttt{d-}($x$, $\theta$)
+& \texttt{p-}($x$, $\theta$) 
+& \texttt{r-}($\theta$) \\
+
+T (standard) & \texttt{qt}($p$, $\nu$) 
+& \texttt{d-}($x$, $\nu$) 
+& \texttt{p-}($x$, $\nu$)
+& \texttt{r-}($\nu$) \\
+
+T (scaled) & \texttt{qt.scaled}($p$, $\nu$, $\mu$, $\sigma$) 
+& \texttt{d-}($x$, $\nu$, $\mu$, $\sigma$)
+& \texttt{p-}($x$, $\nu$, $\mu$, $\sigma$) 
+& \texttt{r-}($\nu$, $\mu$, $\sigma$) \\
+
+uniform & \texttt{qunif}($p$, $a$, $b$) 
+& \texttt{d-}($x$, $a$, $b$)
+& \texttt{p-}($x$, $a$, $b$) 
+& \texttt{r-}($a$, $b$) \\
+
+
+\end{tabular}
+\caption{Functions from $\texttt{R}$ (in alphabetical order) that can be used on this exam with their arguments. The hyphen in colums 3, 4 and 5 is shorthand notation for the full text of the r.v. which can be found in column 2.
+}
+\label{tab:eqs}
+\end{table}
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\problem Measuring the speed of light using a laser is known to be unbiased i.e. the mean is $\theta = 299792458$ m/s.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=3in]{laser.png}
+\end{figure}
+
+\noindent However, there is variance $\sigsq$ which we seek to understand. We do 3 experiments and find measurements of the speed of light to be $x_1 = 303884490$, $x_2 = 296562208$ and $x_3 = 306150981$. Assume these measurements are $\iid \normnot{\theta}{\sigsq}$.
+
+\benum
+
+\subquestionwithpoints{4} Find $\sigsqshathatmle$. \spc{2}
+
+\subquestionwithpoints{4} What is the Jeffrey's prior for $\sigsq~|~\theta$? \spc{0}
+
+\subquestionwithpoints{4} Using Jeffrey's prior for $\sigsq~|~\theta$, find the posterior distribution $\cprob{\sigsq}{X, \theta}$. \spc{1}
+
+\subquestionwithpoints{6} Write the PDF of $\cprob{\sigsq}{X, \theta}$ explicitly. \spc{3}
+
+\subquestionwithpoints{6} Compute $\sigsqshathatmap$. \spc{3}
+
+\subquestionwithpoints{6} Express the $CR_{\sigsq, 90\%}$ using Table 1. \spc{2}
+
+\subquestionwithpoints{6} Express the probability the next experiment will have a measurement different from the truth by more than 1,000 m/s using Table 1. \spc{3}
+
+\eenum
+
+
+
+\problem Ladislaus Josephovich Bortkiewicz was a Polish economist and statistician who published a book in 1898 about the Poisson distribution. A famous dataset in this book is the \qu{Prussian horse-kicking data} famous. 
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=3in]{horse.png}
+\end{figure}
+
+\noindent The data gave the number of soldiers killed by being kicked by a horse each year in each of 16 different cavalry corps over a 20-year period. Bortkiewicz showed that those numbers followed a Poisson distribution and hence we can assume the following data for the general corps is $\iid \poisson{\theta}$.
+
+\begin{table}[h]
+\footnotesize
+\begin{tabular}{l|cccccccccccccccccccc}
+Year (18--)	& 75 & 76 & 77 & 78 & 79 & 80 & 81 & 82 & 83 & 84 & 85 & 86 & 87 & 88 & 89 & 90 & 91 & 92 & 93 & 94 \\ \hline
+\# kicks &	0	& 2	& 2	& 1	& 0	& 0	& 1	& 1	& 0	& 3	& 0	& 2	& 1	& 0	& 0	& 1	& 0	& 1	& 0	& 1 \\
+\end{tabular}
+\end{table}
+
+\benum
+
+\subquestionwithpoints{4} In this example, what is the interpretation of the parameter $\theta$? Answer using English sentence(s). \spc{2}
+
+\subquestionwithpoints{4} What is Haldane's prior for $\theta$? \spc{0}
+
+\subquestionwithpoints{2} Is Haldane's prior for $\theta$ proper? Yes / no. \spc{-0.5}
+
+\subquestionwithpoints{4} Using Haldane's prior for $\theta$, find the posterior distribution $\cprob{\theta}{X}$. \spc{1}
+
+
+\subquestionwithpoints{2} Is $\cprob{\theta}{X}$ proper? Yes / no. \spc{-0.5}
+
+\subquestionwithpoints{4} Compute $\thetahathatmmse$. \spc{3}
+
+\subquestionwithpoints{5} Express the $CR_{\theta, 95\%}$ below using Table 1. \spc{2}
+
+\subquestionwithpoints{7} Express the Bayesian p-value when testing the hypothesis that $\theta > 1$ using Table 1. \spc{2}
+
+\subquestionwithpoints{7} Express the probability the number of kicks in 1895 is three or more using Table 1. \spc{1}
+
+\eenum
+
+
+\pagebreak
+
+
+\problem Every worker at the chocolate factory must wrap the chocolate desserts. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=3in]{chocolate.png}
+\end{figure}
+
+\noindent Each dessert takes a variable amount of time to wrap. We can assume since wrapping has many factors summed, an $\iid \normnot{\theta}{\sigsq}$ is a good model where $\sigsq$ is known to be 0.01 seconds-squared. However, every worker has a different $\theta$. 
+
+A new worker is hired and we naturally want to see how fast this worker wraps on average. For the first three wrappings, the worker does it in 0.23 seconds, 0.21 seconds and 0.24 seconds for an average of $\xbar = 0.2267$ seconds. This is remarkably fast relative to other workers so it is unrealistic to assume this is a good estimate of this new worker's true $\theta$. Here are other worker's lifetime averages:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{hist.png}
+\end{figure}
+
+\noindent Fitting a normal distribution to this data and using maximum likelihood, we find the average worker lifetime wrapping time average is 0.930 seconds with a variance of 0.0000927 seconds-squared. We would like to use the empirical Bayes estimation to draw inference for the new worker's $\theta$.
+
+
+\benum
+
+
+\subquestionwithpoints{5} If we use the normal fit of other workers' lifetime averages to create a prior, this prior will be equivalent to how many pseudoobservations $n_0$? \spc{4}
+
+\subquestionwithpoints{2} Is this prior uninformative? Yes / no. \spc{-0.5}
+
+\subquestionwithpoints{5} Compute $\thetahathatmmae$ under this prior. \spc{5}
+
+\subquestionwithpoints{5} Calculate the shrinkage $\rho$ for this $\thetahathatmmae$ estimate under this prior. \spc{4}
+
+\subquestionwithpoints{8} Express the probability that this new worker is better than average under this prior using Table 1. \spc{3}
+\eenum
+
+
+\pagebreak
+\begin{table}[htp]
+\centering
+\small
+\begin{tabular}{l | llll}
+Distribution                  & Quantile  & PMF / PDF  &CDF       & Sampling  \\ 
+of r.v. &  Function & function         & function &  Function \\ \hline
+beta & \texttt{qbeta}($p$, $\alpha$, $\beta$)             
+& \texttt{d-}($x$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $\alpha$, $\beta$) 
+& \texttt{r-}($\alpha$, $\beta$) \\
+betabinomial & \texttt{qbetabinom}($p$, $n$, $\alpha$, $\beta$)              
+& \texttt{d-}($x$, $n$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $n$, $\alpha$, $\beta$) 
+& \texttt{r-}($n$, $\alpha$, $\beta$) \\
+
+betanegativebinomial & \texttt{qbeta\_nbinom}($p$, $r$, $\alpha$, $\beta$) 
+& \texttt{d-}($x$, $r$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $r$, $\alpha$, $\beta$) 
+& \texttt{r-}($r$, $\alpha$, $\beta$) \\
+
+binomial & \texttt{qbinom}($p$, $n$, $\theta$) 
+& \texttt{d-}($x$, $n$, $\theta$)
+& \texttt{p-}($x$, $n$, $\theta$) 
+& \texttt{r-}($n$, $\theta$) \\
+
+exponential & \texttt{qexp}($p$, $\theta$) 
+& \texttt{d-}($x$, $\theta$) 
+& \texttt{p-}($x$, $\theta$) 
+& \texttt{r-}($\theta$) \\
+
+gamma & \texttt{qgamma}($p$, $\alpha$, $\beta$) 
+& \texttt{d-}($x$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $\alpha$, $\beta$) 
+& \texttt{r-}($\alpha$, $\beta$) \\
+
+geometric & \texttt{qgeom}($p$, $\theta$) 
+& \texttt{d-}($x$, $\theta$)
+& \texttt{p-}($x$, $\theta$) 
+& \texttt{r-}($\theta$) \\
+
+inversegamma & \texttt{qinvgamma}($p$, $\alpha$, $\beta$) 
+& \texttt{d-}($x$, $\alpha$, $\beta$)
+& \texttt{p-}($x$, $\alpha$, $\beta$) 
+& \texttt{r-}($\alpha$, $\beta$) \\
+
+negative-binomial & \texttt{qnbinom}($p$, $r$, $\theta$) 
+& \texttt{d-}($x$, $r$, $\theta$) 
+& \texttt{p-}($x$, $r$, $\theta$) 
+& \texttt{r-}($r$, $\theta$) \\
+
+normal (univariate) & \texttt{qnorm}($p$, $\theta$, $\sigma$) 
+& \texttt{d-}($x$, $\theta$, $\sigma$)
+& \texttt{p-}($x$, $\theta$, $\sigma$) 
+& \texttt{r-}($\theta$, $\sigma$) \\
+
+%normal (multivariate) & 
+%& \multicolumn{2}{l}{\texttt{dmvnorm}($\x$, $\muvec$, $\bSigma$)} 
+%& \texttt{r-}($\muvec$, $\bSigma$) \\
+
+poisson & \texttt{qpois}($p$, $\theta$) 
+& \texttt{d-}($x$, $\theta$)
+& \texttt{p-}($x$, $\theta$) 
+& \texttt{r-}($\theta$) \\
+
+T (standard) & \texttt{qt}($p$, $\nu$) 
+& \texttt{d-}($x$, $\nu$) 
+& \texttt{p-}($x$, $\nu$)
+& \texttt{r-}($\nu$) \\
+
+T (scaled) & \texttt{qt.scaled}($p$, $\nu$, $\mu$, $\sigma$) 
+& \texttt{d-}($x$, $\nu$, $\mu$, $\sigma$)
+& \texttt{p-}($x$, $\nu$, $\mu$, $\sigma$) 
+& \texttt{r-}($\nu$, $\mu$, $\sigma$) \\
+
+uniform & \texttt{qunif}($p$, $a$, $b$) 
+& \texttt{d-}($x$, $a$, $b$)
+& \texttt{p-}($x$, $a$, $b$) 
+& \texttt{r-}($a$, $b$) \\
+
+
+\end{tabular}
+\caption{Functions from $\texttt{R}$ (in alphabetical order) that can be used on this exam with their arguments. The hyphen in colums 3, 4 and 5 is shorthand notation for the full text of the r.v. which can be found in column 2.
+}
+\label{tab:eqs}
+\end{table}
+
+\end{document}
+
+
+
+
+\problem Measuring the speed of light using a laser is known to be unbiased i.e. the mean is $\theta = 3.0 \times 10^8$ m/s. However, there is variance $\sigsq$ which we seek to understand.
+
+\benum
+
+\subquestionwithpoints{4} Find $\thetahatmle$. \spc{0}
+
+%\subquestionwithpoints{4} What is the main problem with your estimate in (a)? \spc{2}
+
+\subquestionwithpoints{5} Compute a $CI_{\theta, 95\%}$. The applicable $z_{\alpha/2} = 2$ for this confidence interval. \spc{2}
+
+\subquestionwithpoints{5} Does the interval in (c) fulfill the second goal of statistical inference? Yes / no and explain your answer. \spc{6}
+
+
+\subquestionwithpoints{5} We will now conduct Bayesian inference. Consider the reduced parameter space $\Theta_0 = \braces{1/3, 1/2, 2/3} \subset \Theta = (0, 1)$. We believe strongly in $\theta = 0.5$ but we want to give some credence to the alternate values. Thus we establish a prior of 
+
+\beqn
+\prob{\theta} = \begin{cases}
+1/3 \withprob 0.1 \\ 
+1/2 \withprob 0.8 \\ 
+2/3 \withprob 0.1 \\ 
+\end{cases}
+\eeqn
+
+Is this the \qu{prior of indifference} for the reduced parameter space? Yes / no. If yes, explain why. If no, what would the prior of indifference be?\spc{2}
+
+
+\subquestionwithpoints{7} Find $\prob{X = x}$. \spc{5}
+
+\subquestionwithpoints{7} Find $\thetahatmap$. Show all work. \spc{7}
+
+\subquestionwithpoints{4} We will now consider the entire parameter space for the binomial model i.e. $\Theta = (0, 1)$. We will use the prior $\theta \sim \betanot{0}{0}$. We will see later in class that this is called \qu{Haldane's prior of ignorance}. Is this prior a legal rv? Circle one: yes / no.\spc{-0.5}
+
+\subquestionwithpoints{4} Regardless of the answer to your previous question, how many pseudofailures is represented by this prior?\spc{0.5}
+
+
+\subquestionwithpoints{4} We will use the prior $\theta \sim \betanot{0.1}{0.1}$. Is this prior a legal rv? Circle one: yes / no.\spc{-0.5}
+
+\subquestionwithpoints{4} Assuming the prior in (i), $\cprob{\theta}{X = x} =$ \spc{0}
+
+\subquestionwithpoints{10} Draw $\cprob{\theta}{X = x}$ from (j) to the best of your ability. Label all axes and critical points. \spc{6}
+
+\subquestionwithpoints{4} Does $\thetahatmap$ exist? Circle one: yes / no. \spc{-0.5}
+
+\subquestionwithpoints{4} Compute $\thetahatmmse$ (4pt). Denote it in the illustration above (1pt). \spc{1}
+
+\subquestionwithpoints{4} Express $\thetahatmmae$ but do not compute (4pt). Denote it in the illustration above (1pt). \spc{0.5}
+
+\subquestionwithpoints{4} What is the proportion of shrinkage towards the prior expectation if you employ the posterior expectation as your point estimate? \spc{1}
+
+
+\eenum
+
+\problem Consider $\Xoneton \iid \text{Rayleigh}\parens{\theta} := \frac{x}{\theta}e^{-x^2 / (2\theta)}$ which has support $(0,\infty)$ and parameter space $\Theta = (0, \infty)$.
+
+\benum
+
+\subquestionwithpoints{8} Find $\loglik{\theta ; \Xoneton}$. Simplify as much as possible.\spc{5}
+
+\subquestionwithpoints{9} Find $\thetahatmle$. \spc{6}
+
+\eenum
+
+\problem The following are theoretical questions.
+
+\benum
+
+\subquestionwithpoints{8} Compute $B(5,5)^{-1}$.\spc{3}
+
+\subquestionwithpoints{6} Extra credit: compute $B(0.5,0.5)$. Do this on the back of this page. \spc{3}
+
+\eenum
+
+
+\end{document}
